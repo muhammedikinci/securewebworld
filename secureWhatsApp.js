@@ -33,6 +33,12 @@
             }
         },
         setBlurPhotos: function () {
+            if (window.isblurPhotoIntevalRunning === true) {
+                return;
+            }
+
+            window.isblurPhotoIntevalRunning = true;
+
             window.blurPhotoInteval = setInterval(() => {
                 var imageListIn = document.querySelectorAll('.message-in img');
                 var imageListOut = document.querySelectorAll('.message-out img');
@@ -47,6 +53,7 @@
             }, 500);
         },
         removePhotoBlur: function () {
+            window.isblurPhotoIntevalRunning = false;
             clearInterval(window.blurPhotoInteval);
 
             var imageListIn = document.querySelectorAll('.message-in img');
@@ -79,37 +86,37 @@
                         font-family: 'Quicksand', sans-serif;
                         cursor: pointer;
                     }
-    
+
                     a.removeCamp:hover {
                         background-color: #454545;
                         transition: all 0.5s ease;
                     }
-    
+
                     .a {
                         color: black;
                         font-family: 'Quicksand', sans-serif;
                         font-size: 12px;
                         cursor: pointer;
                     }
-    
+
                     .hov:hover {
                         background-color:#ccc;
                         color: white !important;
                         transition: all 0.5s ease;
                     }
-    
+
                     .ul {
                         list-style-type: none;
                         padding: 0;
                         margin-top: 10px;
                         background-color: #eaeaea;
                     }
-    
+
                     .li {
                         padding: 5px;
                     }
                 </style>
-    
+
                 <a onClick="document.querySelector('#compMenu').remove()" class="removeCamp"> >></a>
                 <ul class="ul">
                     <li class="li hov"><a class="a" onClick="window.secureWP.setPaneBlur()" >Set Pane Blur</a></li>
@@ -118,7 +125,7 @@
                     <li class="li hov"><a class="a" onClick="window.secureWP.removePhotoBlur()" >Remove Photo Blur</a></li>
                 </ul>
             `;
-    
+
             if (document.querySelector('#compMenu') === null) {
                 var compMenuElement = document.createElement('div');
                 compMenuElement.id = 'compMenu';
@@ -127,15 +134,15 @@
                     position: fixed;
                     height: 100px;
                     width: 150px;
-                    bottom: 45%; 
+                    bottom: 45%;
                     right:0;
                     text-align: center;`;
-    
+
                 document.body.insertBefore(compMenuElement, document.body.firstChild);
-    
+
                 var ShadowHost = document.getElementById('compMenu');
                 var ShadowRoot = ShadowHost.attachShadow({mode: 'closed'});
-    
+
                 ShadowRoot.innerHTML = compMenu;
             }
         }

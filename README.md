@@ -1,5 +1,5 @@
 # securewebwhatsapp
-Blur your images and contacts
+Blur your images and contacts. Store message with Mutation and get back deleted messages.
 
 Copy all secureWhatsApp.js and create new User Script in TamperMonkey and paste.
 

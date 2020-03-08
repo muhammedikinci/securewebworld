@@ -97,7 +97,7 @@
                     });
                 } else {
                     messages.forEach((message) => {
-                        if (dict[message.title] && dict[message.title].slice(-1)[0] !== message.content) {
+                        if (dict[message.title] && dict[message.title].indexOf(message.content) === -1) {
                             dict[message.title].push(message.content);
                         } else if (!dict[message.title]) {
                             dict["_total"] = dict["_total"] + 1;

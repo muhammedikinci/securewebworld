@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Secure Web Whatsapp
 // @namespace    https://github.com/muhammedikinci/securewebwhatsapp
-// @version      0.1
+// @version      0.2
 // @description  Blur your images and contacts
 // @author       Muhammed İKİNCİ
 // @match        https://web.whatsapp.com/
@@ -67,6 +67,162 @@
                 this.removeStyle(element, 'filter: blur(50px);');
             });
         },
+        storeMessages: function () {
+            window.dict = {};
+
+            function CollectData() {
+                let spans = document.querySelectorAll('span[title]');
+                let datas = [];
+
+                spans.forEach((span, i) => {
+                    if (i % 2 === 0 && spans[i + 1] && spans[i + 1].textContent) {
+                        datas.push({
+                            title: span.textContent,
+                            content: spans[i + 1].textContent
+                        });
+                    }
+                });
+
+                return datas;
+            }
+
+            function DetectChanges() {
+                let messages = CollectData();
+
+                if (!dict["_total"]) {
+                    dict["_total"] = messages.length;
+
+                    messages.forEach((message) => {
+                        dict[message.title] = [message.content];
+                    });
+                } else {
+                    messages.forEach((message) => {
+                        if (dict[message.title] && dict[message.title].slice(-1)[0] !== message.content) {
+                            dict[message.title].push(message.content);
+                        } else if (!dict[message.title]) {
+                            dict["_total"] = dict["_total"] + 1;
+                            dict[message.title] = [message.content];
+                        }
+                    });
+                }
+
+            }
+
+            let observer = new MutationObserver(mutationRecords => {
+                DetectChanges();
+            });
+
+            var myInterval = setInterval(() => {
+                if (document.querySelector('.app-wrapper-web')) {
+                    observer.observe(document.querySelector('#pane-side') || document.querySelector('#side'), {
+                        childList: true,
+                        subtree: true,
+                        characterDataOldValue: true
+                    });
+
+                    clearInterval(myInterval);
+                }
+            }, 500);
+        },
+        openMessages: function () {
+            var messageHtml = '';
+
+            Object.getOwnPropertyNames(dict).forEach((propName) => {
+                messageHtml += `<li class="li">${propName}`;
+
+                if (typeof dict[propName].length === 'undefined') {return false;}
+
+                dict[propName].forEach((message) => {
+                    messageHtml += `<p>${message}</p>`;
+                });
+
+                messageHtml += '</li>';
+            });
+
+            var messagesComp = `
+                <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+                <style>
+                    all: initial;
+                    * {
+                        all: unset;
+                    }
+                    .removeCamp {
+                        color: white;
+                        font-size: 15px;
+                        position: absolute;
+                        right: 0px;
+                        top: -27px;
+                        background-color: red;
+                        padding: 10px;
+                        font-family: 'Quicksand', sans-serif;
+                        cursor: pointer;
+                    }
+
+                    a.removeCamp:hover {
+                        background-color: #454545;
+                        transition: all 0.5s ease;
+                    }
+
+                    .a {
+                        color: black;
+                        font-family: 'Quicksand', sans-serif;
+                        font-size: 12px;
+                        cursor: pointer;
+                    }
+
+                    .hov:hover {
+                        background-color:#ccc;
+                        color: white !important;
+                        transition: all 0.5s ease;
+                    }
+
+                    .ul {
+                        list-style-type: none;
+                        padding: 0;
+                        margin-top: 10px;
+                        background-color: #eaeaea;
+                        height: 350px;
+                        overflow: scroll;
+                    }
+
+                    .li {
+                        padding: 5px;
+                        margin-top: 5px;
+                        border: 1px solid #a1a1a1;
+                    }
+                    p {
+                        background-color: #ccc;
+                        padding: 3px;
+                    }
+                </style>
+
+                <a onClick="document.querySelector('#messagesComp').remove()" class="removeCamp"> >></a>
+                <ul class="ul">
+                    ${messageHtml}
+                </ul>
+            `;
+
+            if (document.querySelector('#messagesComp') === null) {
+                var messagesCompElement = document.createElement('div');
+                messagesCompElement.id = 'messagesComp';
+                messagesCompElement.style = `
+                    z-index: 99999;
+                    position: fixed;
+                    height: 350px;
+                    width: 400px;
+                    bottom: 0;
+                    background-color: #eaeaea95;
+                    right:0;
+                    text-align: center;`;
+
+                document.body.insertBefore(messagesCompElement, document.body.firstChild);
+
+                var ShadowHost = document.getElementById('messagesComp');
+                var ShadowRoot = ShadowHost.attachShadow({mode: 'closed'});
+
+                ShadowRoot.innerHTML = messagesComp;
+            }
+        },
         componentMenu: function () {
             var compMenu = `
                 <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
@@ -123,6 +279,7 @@
                     <li class="li hov"><a class="a" onClick="window.secureWP.removePaneBlur()" >Remove Pane Blur</a></li>
                     <li class="li hov"><a class="a" onClick="window.secureWP.setBlurPhotos()" >Photo Blur</a></li>
                     <li class="li hov"><a class="a" onClick="window.secureWP.removePhotoBlur()" >Remove Photo Blur</a></li>
+                    <li class="li hov"><a class="a" onClick="window.secureWP.openMessages()" >Open Messages</a></li>
                 </ul>
             `;
 
@@ -149,4 +306,5 @@
     }
 
     window.secureWP.componentMenu();
+    window.secureWP.storeMessages();
 })();

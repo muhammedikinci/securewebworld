@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      width: 300px;
+      height: auto;
+    }
+
+    .header {
+      border-bottom: 1px solid #cccccc50;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .group {
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      font-weight: 400;
+      color: #212529;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-color: transparent;
+      border: 1px solid transparent;
+      padding: .375rem .75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: .25rem;
+      outline: none;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
+    }
+
+    .btn-primary {
+      color: #fff;
+      background-color: #007bff;
+      border-color: #007bff
+    }
+
+    .btn-primary:hover {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc
+    }
+
+    .btn-primary.focus,
+    .btn-primary:focus {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc;
+      box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5)
+    }
+
+    .hr {
+      border-bottom: 1px solid #cccccc50;
+      width: 100%;
+      height: 1px;
+      margin-bottom: 5px;
+      margin-top: 3px;
+    }
+
+    p {
+      margin: 5px;
+      font-size: 15px;
+    }
+
+    label {
+      font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Secure Web</h1>
+  </div>
+  <div class="group">
+    <p>Pane Blur</p>
+    <button class="btn btn-primary" id="setPaneBlur">Set Pane Blur</button>
+    <button class="btn btn-primary" id="removePaneBlur">Remove Pane Blur</button>
+    <span class="hr"></span>
+    <p>Photo Blur</p>
+    <button class="btn btn-primary" id="setPhotoBlur">Set Photo Blur</button>
+    <button class="btn btn-primary" id="removePhotoBlur">Remove Photo Blur</button>
+    <span class="hr"></span>
+    <p>Messages</p>
+    <button class="btn btn-primary" id="showMessages">Show Messages</button>
+    <label><a href="https://github.com/muhammedikinci/securewebwhatsapp" target="_blank">View on Github!</a></label>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>

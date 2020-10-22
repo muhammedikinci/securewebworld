@@ -3,7 +3,7 @@ Chrome extension and tampermonkey file. Blur your images and contacts. Store mes
 
 ## Chrome Extension
 
-Chrome Web Store Link : Soon
+Chrome Web Store Link : https://chrome.google.com/webstore/detail/secure-web-whatsapp/agkckhaodkgacbeiioikncgibfomoimi
 
 ### Manual
 Clone Repository

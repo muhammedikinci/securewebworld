@@ -52,6 +52,26 @@
                 });
             }, 500);
         },
+        setMessageBlur: function () {
+            let spans = document.querySelectorAll('span.copyable-text');
+    
+            spans.forEach((span, i) => {
+                span.setAttribute('style', 'filter: blur(5px)');
+                span.addEventListener("mouseenter", function() {
+                    span.setAttribute('style', '');
+                });
+                span.addEventListener("mouseleave", function() {
+                    span.setAttribute('style', 'filter: blur(5px)');
+                });
+            });
+        },
+        removeMessageBlur: function () {
+            let spans = document.querySelectorAll('span.copyable-text');
+    
+            spans.forEach((span, i) => {
+                span.setAttribute('style', '');
+            });
+        },
         removePhotoBlur: function () {
             window.isblurPhotoIntevalRunning = false;
             clearInterval(window.blurPhotoInteval);
@@ -280,6 +300,8 @@
                     <li class="li hov"><a class="a" onClick="window.secureWP.setBlurPhotos()" >Photo Blur</a></li>
                     <li class="li hov"><a class="a" onClick="window.secureWP.removePhotoBlur()" >Remove Photo Blur</a></li>
                     <li class="li hov"><a class="a" onClick="window.secureWP.openMessages()" >Open Messages</a></li>
+                    <li class="li hov"><a class="a" onClick="window.secureWP.setMessageBlur()" >Set Blur To Messages</a></li>
+                    <li class="li hov"><a class="a" onClick="window.secureWP.removeMessageBlur()" >Remove Blur From Messages</a></li>
                 </ul>
             `;
 

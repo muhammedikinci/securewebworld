@@ -11,13 +11,11 @@
         "persistent": true
     },
     "content_scripts": [{
-        "matches": [
-            "<all_urls>"
-        ],
+        "matches": ["*://*.whatsapp.com/*"],
         "js": ["contentScript.js"]
     }],
-    "permissions": ["*web.whatsapp.com*"],
-    "page_action": {
+    "permissions": ["tabs", "*://*.whatsapp.com/*"],
+    "browser_action": {
         "default_popup": "popup.html"
     },
     "web_accessible_resources": ["contentScript.js"],

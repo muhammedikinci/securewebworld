@@ -40,6 +40,26 @@ var wp = {
             });
         }, 500);
     },
+    setMessageBlur: function () {
+        let spans = document.querySelectorAll('span.copyable-text');
+
+        spans.forEach((span, i) => {
+            span.setAttribute('style', 'filter: blur(5px)');
+            span.addEventListener("mouseenter", function() {
+                span.setAttribute('style', '');
+            });
+            span.addEventListener("mouseleave", function() {
+                span.setAttribute('style', 'filter: blur(5px)');
+            });
+        });
+    },
+    removeMessageBlur: function () {
+        let spans = document.querySelectorAll('span.copyable-text');
+
+        spans.forEach((span, i) => {
+            span.setAttribute('style', '');
+        });
+    },
     removePhotoBlur: function () {
         window.isblurPhotoIntevalRunning = false;
         clearInterval(window.blurPhotoInteval);

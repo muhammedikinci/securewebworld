@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         Secure Web Whatsapp
-// @namespace    https://github.com/muhammedikinci/securewebwhatsapp
+// @name         Secure Web World
+// @namespace    https://github.com/muhammedikinci/securewebworld
 // @version      0.2
 // @description  Blur your images and contacts
 // @author       Muhammed İKİNCİ
